@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Drop &amp; Done</string>
+    <string name="hello">Hello,</string>
+    <string name="username">Username</string>
+    <string name="email">xyz@gmail.com</string>
+    <string name="search">Cari Laundry</string>
+    <string name="setting">Pengaturan</string>
+</resources>
