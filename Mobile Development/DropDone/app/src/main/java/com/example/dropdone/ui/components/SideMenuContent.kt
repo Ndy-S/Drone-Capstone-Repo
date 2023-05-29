@@ -12,6 +12,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -20,21 +21,32 @@ import com.example.dropdone.data.SideMenuItem
 
 @Composable
 fun SideMenuHeader() {
-    Column(
-        modifier = Modifier
-            .fillMaxWidth(),
-        horizontalAlignment = Alignment.CenterHorizontally
+    Box(
+
     ) {
         Image(
-            painter = painterResource(R.drawable.profile),
-            contentDescription = "Profile User",
-            modifier = Modifier
-                .size(50.dp)
-                .clip(CircleShape)
+            painter = painterResource(R.drawable.gray),
+            contentDescription = null,
+            contentScale = ContentScale.FillBounds,
+            modifier = Modifier.height(150.dp)
         )
-        Spacer(modifier = Modifier.height(10.dp))
-        Text(text = stringResource(R.string.username))
-        Text(text = stringResource(R.string.email))
+        Column(
+            modifier = Modifier
+                .padding(10.dp)
+                .fillMaxWidth(),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Image(
+                painter = painterResource(R.drawable.profile),
+                contentDescription = "Profile User",
+                modifier = Modifier
+                    .size(75.dp)
+                    .clip(CircleShape)
+            )
+            Spacer(modifier = Modifier.height(10.dp))
+            Text(text = stringResource(R.string.username))
+            Text(text = stringResource(R.string.emailDummy))
+        }
     }
 }
 

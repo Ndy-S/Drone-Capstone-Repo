@@ -1,18 +1,20 @@
-package com.example.dropdone
+package com.example.dropdone.ui.components
 
 import androidx.compose.foundation.layout.Column
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import com.example.dropdone.pages.HomePage
+import androidx.compose.ui.res.stringResource
+import com.example.dropdone.R
 
 @Composable
-fun HomeApp(
+fun HomeContent(
     modifier: Modifier = Modifier
 ) {
     Column(
         horizontalAlignment = Alignment.Start
     ) {
-        HomePage()
+        Text(text = stringResource(R.string.current_loc))
     }
 }

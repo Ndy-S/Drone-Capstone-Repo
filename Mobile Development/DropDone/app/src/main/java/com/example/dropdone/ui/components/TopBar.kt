@@ -1,25 +1,25 @@
 package com.example.dropdone.ui.components
 
-import android.content.res.Resources.Theme
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.example.dropdone.R
-import com.example.dropdone.ui.theme.White
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.setValue
 
 @Composable
 fun Profile(
@@ -56,9 +56,12 @@ fun Profile(
 fun SearchBar(
     modifier: Modifier = Modifier
 ) {
+    var search by remember { mutableStateOf("") }
     TextField(
-        value = "",
-        onValueChange = {},
+        value = search,
+        onValueChange = { newSearch ->
+            search = newSearch
+        },
         leadingIcon = {
             Icon(
                 imageVector = Icons.Default.Search,
@@ -66,7 +69,7 @@ fun SearchBar(
             )
         },
         colors = TextFieldDefaults.textFieldColors(
-            backgroundColor = MaterialTheme.colors.onBackground,
+            backgroundColor = MaterialTheme.colors.surface,
         ),
         placeholder = {
             Text(stringResource(R.string.search))
