@@ -1,4 +1,4 @@
-package com.example.dropdone.ui.components
+package com.example.dropdone.ui.components.home
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable

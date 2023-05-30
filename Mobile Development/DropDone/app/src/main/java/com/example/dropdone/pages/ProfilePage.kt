@@ -14,8 +14,8 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.dropdone.R
-import com.example.dropdone.ui.components.ProfileContent
-import com.example.dropdone.ui.components.ProfileHeader
+import com.example.dropdone.ui.components.profile.ProfileContent
+import com.example.dropdone.ui.components.profile.ProfileHeader
 
 @Composable
 fun ProfilePage(

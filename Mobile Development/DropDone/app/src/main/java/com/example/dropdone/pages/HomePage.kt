@@ -22,16 +22,15 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.dropdone.R
 import com.example.dropdone.data.SideMenuItem
-import com.example.dropdone.ui.components.*
+import com.example.dropdone.ui.components.home.*
 import com.example.dropdone.ui.navigation.Menu
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 @Composable
 fun HomePage(
     navController: NavHostController = rememberNavController(),
-    drawerState: DrawerState = rememberDrawerState(initialValue = DrawerValue.Closed),
+//    drawerState: DrawerState = rememberDrawerState(initialValue = DrawerValue.Closed),
     coroutineScope: CoroutineScope = rememberCoroutineScope(),
     scaffoldState: ScaffoldState = rememberScaffoldState()
 ) {
@@ -40,18 +39,13 @@ fun HomePage(
         topBar = {
             AppBar(
                 onNavigationIconClick = {
-                    if (drawerState.isClosed) {
-                        coroutineScope.launch {
-                            scaffoldState.drawerState.open()
-                        }
-                    } else {
-                        coroutineScope.launch {
-                            scaffoldState.drawerState.close()
-                        }
+                    coroutineScope.launch {
+                        scaffoldState.drawerState.open()
                     }
                 }
             )
         },
+        drawerGesturesEnabled = scaffoldState.drawerState.isOpen,
         drawerContent = {
             SideMenuHeader()
             SideMenuBody(
@@ -107,19 +101,24 @@ fun HomePage(
 fun HomeContent(
     navController: NavController = rememberNavController()
 ) {
-    Box(modifier = Modifier) {
-        Image(
-            painter = painterResource(R.drawable.gray),
-            contentDescription = null,
-            contentScale = ContentScale.FillBounds,
-            modifier = Modifier.height(200.dp)
-        )
-        Column(
-            horizontalAlignment = Alignment.Start
-        ) {
-            Profile()
-            SearchBar()
+    Column(
+        horizontalAlignment = Alignment.Start
+    ) {
+        Box(modifier = Modifier) {
+            Image(
+                painter = painterResource(R.drawable.gray),
+                contentDescription = null,
+                contentScale = ContentScale.FillBounds,
+                modifier = Modifier.height(200.dp)
+            )
+            Column(
+                horizontalAlignment = Alignment.Start
+            ) {
+                Profile()
+                SearchBar()
+            }
         }
+        GMapView()
     }
 }
 
