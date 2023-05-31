@@ -2,7 +2,14 @@
     <string name="app_name">Drop &amp; Done</string>
     <string name="hello">Hello,</string>
     <string name="username">Username</string>
-    <string name="email">xyz@gmail.com</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="emailDummy">xyz@gmail.com</string>
     <string name="search">Cari Laundry</string>
     <string name="setting">Pengaturan</string>
+    <string name="profile_update">Simpan Perubahan</string>
+    <string name="recommendation_loc">Lokasi Terdekat</string>
+    <string name="recommendation_rate">Rating Tertinggi</string>
+    <string name="recommendation">Rekomendasi</string>
+    <string name="current_loc">Lokasi Kamu Saat Ini</string>
 </resources>
