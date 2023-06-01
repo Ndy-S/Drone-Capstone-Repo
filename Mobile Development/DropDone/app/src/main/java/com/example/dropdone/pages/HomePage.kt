@@ -1,5 +1,6 @@
 package com.example.dropdone.pages
 
+import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
@@ -13,16 +14,20 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import com.example.dropdone.R
 import com.example.dropdone.data.SideMenuItem
 import com.example.dropdone.ui.components.home.*
+import com.example.dropdone.ui.navigation.DETAIL_ARGUMENT_KEY
 import com.example.dropdone.ui.navigation.Menu
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
@@ -30,7 +35,6 @@ import kotlinx.coroutines.launch
 @Composable
 fun HomePage(
     navController: NavHostController = rememberNavController(),
-//    drawerState: DrawerState = rememberDrawerState(initialValue = DrawerValue.Closed),
     coroutineScope: CoroutineScope = rememberCoroutineScope(),
     scaffoldState: ScaffoldState = rememberScaffoldState()
 ) {
@@ -84,13 +88,27 @@ fun HomePage(
                 startDestination = Menu.Home.route
             ) {
                 composable(Menu.Home.route) {
-                    HomeContent()
+                    HomeContent(navController = navController)
                 }
                 composable(Menu.Setting.route) {
                     SettingPage()
                 }
                 composable(Menu.Profile.route) {
                     ProfilePage()
+                }
+                composable(Menu.Detail.route,
+                    arguments = listOf(
+                        navArgument(DETAIL_ARGUMENT_KEY) {
+                            type = NavType.StringType
+                        }
+                    )
+                ) {
+                    val laundryId = it.arguments?.getString(DETAIL_ARGUMENT_KEY)
+                    if (laundryId != null) {
+                        DetailPage(
+                            laundryId = laundryId
+                        )
+                    }
                 }
             }
         }
@@ -115,10 +133,11 @@ fun HomeContent(
                 horizontalAlignment = Alignment.Start
             ) {
                 Profile()
-                SearchBar()
+                SearchBarLaundry()
             }
         }
         GMapView()
+        LaundryRec(navController = navController)
     }
 }
 

@@ -10,6 +10,6 @@
     <string name="profile_update">Simpan Perubahan</string>
     <string name="recommendation_loc">Lokasi Terdekat</string>
     <string name="recommendation_rate">Rating Tertinggi</string>
-    <string name="recommendation">Rekomendasi</string>
+    <string name="recommendation">Rekomendasi Laundry</string>
     <string name="current_loc">Lokasi Kamu Saat Ini</string>
 </resources>
