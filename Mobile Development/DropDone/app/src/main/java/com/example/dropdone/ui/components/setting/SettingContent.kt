@@ -2,8 +2,8 @@ package com.example.dropdone.ui.components.setting
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.Switch
-import androidx.compose.material.Text
+import androidx.compose.material3.Switch
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -46,6 +46,7 @@ fun SettingContent(
                 Modifier.clickable {
                     recLoc = !recLoc
                 }
+                    .padding(start = 16.dp)
             )
         }
 
@@ -58,6 +59,7 @@ fun SettingContent(
                 Modifier.clickable {
                     recRate = !recRate
                 }
+                    .padding(start = 16.dp)
             )
         }
     }

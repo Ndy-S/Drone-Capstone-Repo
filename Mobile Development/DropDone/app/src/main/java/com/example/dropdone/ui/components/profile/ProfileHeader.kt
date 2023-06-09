@@ -7,6 +7,12 @@ import androidx.compose.foundation.shape.CutCornerShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -62,6 +68,7 @@ fun ProfileContent(
     var userEmail by remember { mutableStateOf("") }
     var userPassword by remember { mutableStateOf("") }
     var userPasswordVisible by remember { mutableStateOf(false) }
+    var userAddress by remember { mutableStateOf("") }
 
     Column(
         modifier = Modifier
@@ -112,6 +119,18 @@ fun ProfileContent(
             },
             modifier = Modifier
                 .fillMaxWidth()
+                .padding(bottom = 20.dp)
+        )
+
+        Text(stringResource(R.string.current_loc))
+        OutlinedTextField(
+            value = userAddress,
+            onValueChange = { newUserAddress ->
+                userAddress = newUserAddress
+            },
+            label = { Text("Lokasi kamu saat ini")},
+            modifier = Modifier
+                .fillMaxWidth()
                 .padding(bottom = 30.dp)
         )
 
@@ -120,7 +139,7 @@ fun ProfileContent(
 
             },
             shape = RoundedCornerShape(6.dp),
-            colors = ButtonDefaults.buttonColors(backgroundColor = colorResource(R.color.dark_blue)),
+            colors = ButtonDefaults.buttonColors(colorResource(R.color.dark_blue)),
             modifier = Modifier
                 .fillMaxWidth()
                 .height(50.dp)

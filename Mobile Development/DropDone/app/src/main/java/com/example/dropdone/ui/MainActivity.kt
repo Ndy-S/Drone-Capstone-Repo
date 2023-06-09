@@ -1,4 +1,4 @@
-package com.example.dropdone
+package com.example.dropdone.ui
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity

@@ -1,4 +1,4 @@
-package com.example.dropdone.data
+package com.example.dropdone.model
 
 import androidx.compose.ui.graphics.vector.ImageVector
 

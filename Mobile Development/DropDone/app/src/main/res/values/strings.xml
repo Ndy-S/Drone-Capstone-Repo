@@ -6,10 +6,13 @@
     <string name="password">Password</string>
     <string name="emailDummy">xyz@gmail.com</string>
     <string name="search">Cari Laundry</string>
-    <string name="setting">Pengaturan</string>
+    <string name="setting">Setting</string>
     <string name="profile_update">Simpan Perubahan</string>
     <string name="recommendation_loc">Lokasi Terdekat</string>
     <string name="recommendation_rate">Rating Tertinggi</string>
     <string name="recommendation">Rekomendasi Laundry</string>
     <string name="current_loc">Lokasi Kamu Saat Ini</string>
+    <string name="order_list">Order List</string>
+    <string name="profile">Profile</string>
+    <string name="home">Home</string>
 </resources>
