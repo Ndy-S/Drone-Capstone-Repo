@@ -1,37 +1,52 @@
 package com.example.dropdone.data
 
 import android.util.Log
-import androidx.compose.runtime.mutableStateListOf
-import androidx.compose.runtime.mutableStateOf
-import com.example.dropdone.model.DataLaundryDummy
 import com.example.dropdone.model.Laundry
-import com.example.dropdone.model.ObjectLaundryDummy
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.FirebaseFirestoreException
-import com.google.firebase.firestore.ktx.firestore
-import com.google.firebase.firestore.ktx.toObject
-import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.tasks.await
 
 class LaundryRepository {
-    fun getLaundry(): List<DataLaundryDummy> {
-        return ObjectLaundryDummy.obLaundry
+    fun getLaundry(): List<Laundry> {
+        return mutableListOf()
     }
 
-    fun searchLaundry(query: String): List<DataLaundryDummy> {
-        return ObjectLaundryDummy.obLaundry.filter {
-            it.title.contains(query, ignoreCase = true)
+    fun searchLaundry(query: String): List<Laundry> {
+        val laundryList = mutableListOf<Laundry>()
+        return laundryList.filter {
+            it.id.contains(query, ignoreCase = true)
         }
     }
-
-    fun getLaundryFireStore(db: FirebaseFirestore) {
+     suspend fun getLaundryFireStore(db: FirebaseFirestore): MutableList<Laundry> {
+        val laundryData = mutableListOf<Laundry>()
         val collection = db.collection("laundry")
 
-        collection.get().addOnSuccessListener {
-            for (document in it) {
+        try {
+            val snapshot = collection.get().await()
+
+            for (document in snapshot.documents) {
                 val data = document.data
-                Log.d("testing", "Document ID: ${document.id}, Data: $data")
+                if (data != null) {
+                    val documentData = Laundry(
+                        id = document.id,
+                        address = data["address"].toString(),
+                        email = data["email"].toString(),
+                        icon = data["icon"].toString(),
+                        latitude = data["latitude"].toString(),
+                        laundry_name = data["laundry_name"].toString(),
+                        longitude = data["longitude"].toString(),
+                        opening_hours = data["opening_hour"].toString(),
+                        phone_number = data["phone_number"].toString(),
+                        price = data["price"].toString(),
+                        rating = data["rating"].toString().toDoubleOrNull() ?: 0.0
+                    )
+                    laundryData.add(documentData)
+                }
             }
+        } catch (e: Exception) {
+            Log.e("Firestore Error", "Error getting laundry documents: ", e)
         }
+
+        Log.d("testing", "querySnapshot data: $laundryData")
+        return laundryData
     }
 }

@@ -37,8 +37,8 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.dropdone.data.LaundryRepository
 import com.example.dropdone.model.DataLaundryDummy
-import com.example.dropdone.ui.MainViewModel
-import com.example.dropdone.ui.ViewModelFactory
+import com.example.dropdone.MainViewModel
+import com.example.dropdone.ViewModelFactory
 import com.example.dropdone.ui.navigation.Menu
 
 @Composable
@@ -101,18 +101,18 @@ fun SearchBarLaundry(
                 placeholder = { Text(stringResource(R.string.search)) },
                 leadingIcon = { Icon(Icons.Default.Search, contentDescription = null) }
             ) {
-                LazyColumn(
-                    modifier = Modifier.fillMaxWidth(),
-                    verticalArrangement = Arrangement.spacedBy(4.dp)
-                ) {
-                    items(laundryList) { laundry ->
-                        LaundrySearchList(
-                            laundry = laundry,
-                            modifier = Modifier.fillMaxWidth(),
-                            navController = navController
-                        )
-                    }
-                }
+//                LazyColumn(
+//                    modifier = Modifier.fillMaxWidth(),
+//                    verticalArrangement = Arrangement.spacedBy(4.dp)
+//                ) {
+//                    items(laundryList) { laundry ->
+//                        LaundrySearchList(
+//                            laundry = laundry,
+//                            modifier = Modifier.fillMaxWidth(),
+//                            navController = navController
+//                        )
+//                    }
+//                }
             }
         }
         GMapView()

@@ -5,6 +5,7 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.dropdone.model.DataLaundryDummy
+import com.example.dropdone.model.Laundry
 import com.example.dropdone.model.ObjectLaundryDummy
 
 @Composable
@@ -14,10 +15,13 @@ fun DetailPage(
 ) {
     val laundry = getLaundryData(laundryId)
     Text(
-        text = laundry.title
+        text = laundry.first().laundry_name
     )
 }
 
-fun getLaundryData(id: String): DataLaundryDummy {
-    return ObjectLaundryDummy.obLaundry.find { it.id == id } ?: throw IllegalArgumentException("Invalid Laundry Id")
+fun getLaundryData(id: String): List<Laundry> {
+    val laundryList = mutableListOf<Laundry>()
+    return laundryList.filter { it.id == id }.ifEmpty {
+        throw IllegalArgumentException("Invalid Laundry Id")
+    }
 }

@@ -1,4 +1,4 @@
-package com.example.dropdone.ui
+package com.example.dropdone
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding

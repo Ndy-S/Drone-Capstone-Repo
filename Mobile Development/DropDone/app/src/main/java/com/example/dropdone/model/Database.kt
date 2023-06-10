@@ -1,16 +1,17 @@
 package com.example.dropdone.model
 
 data class Laundry(
-    val address: String? = null,
-    val email: String? = null,
-    val icon: String? = null,
-    val latitude: String? = null,
-    val laundry_name: String? = null,
-    val longitude: String? = null,
-    val opening_hours: String? = null,
-    val phone_number: String? = null,
-    val price: String? = null,
-    val rating: Int? = null
+    val id: String = "",
+    val address: String = "",
+    val email: String = "",
+    val icon: String = "",
+    val latitude: String = "",
+    val laundry_name: String = "",
+    val longitude: String = "",
+    val opening_hours: String = "",
+    val phone_number: String = "",
+    val price: String = "",
+    val rating: Double = 0.0
 )
 
 data class Reviews(
