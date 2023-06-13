@@ -23,16 +23,6 @@ data class Reviews(
     val sentiment_score: Double = 0.0
 )
 
-data class User(
-    val id: String = "",
-    val address: String = "",
-    val email: String = "",
-    val password: String = "",
-    val pref_loc: Boolean = false,
-    val pref_rating: Boolean = false,
-    val username: String = ""
-)
-
 data class Booking(
     val id: String = "",
     val laundry_id: String = "",
@@ -43,4 +33,25 @@ data class Booking(
     val pick: Boolean = false,
     val type: String = "",
     val weight: Double = 0.0
+)
+
+class SignInResult(
+    val data: UserData?,
+    val errorMessage: String?
+)
+
+data class UserData(
+    val userId: String,
+    val username: String?,
+    val password: String?,
+    val email: String?,
+    val address: String?,
+    val pref_loc: Boolean,
+    val pref_rating: Boolean,
+    val profilePictureUrl: String?
+)
+
+data class SignInState(
+    val isSignInSuccessful: Boolean = false,
+    val signInError: String? = null
 )

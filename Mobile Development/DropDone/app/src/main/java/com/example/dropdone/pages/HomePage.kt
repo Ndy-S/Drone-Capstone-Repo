@@ -29,10 +29,10 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.dropdone.R
 import com.example.dropdone.model.SideMenuItem
+import com.example.dropdone.model.UserData
 import com.example.dropdone.ui.components.home.*
 import com.example.dropdone.ui.navigation.Menu
 import kotlinx.coroutines.launch
-
 
 @Composable
 fun HomePage(

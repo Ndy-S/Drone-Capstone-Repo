@@ -11,6 +11,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import com.example.dropdone.model.UserData
 import com.example.dropdone.pages.BookingPage
 import com.example.dropdone.pages.DetailBookingPage
 import com.example.dropdone.pages.DetailPage
@@ -85,7 +86,6 @@ fun HomeApp(
                             bookingId = bookingId,
                             navController = navController
                         )
-
                     }
                 }
             }
