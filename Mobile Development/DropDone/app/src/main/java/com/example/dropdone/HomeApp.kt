@@ -11,12 +11,12 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import com.example.dropdone.pages.BookingPage
+import com.example.dropdone.pages.DetailBookingPage
 import com.example.dropdone.pages.DetailPage
 import com.example.dropdone.pages.HomePage
 import com.example.dropdone.pages.OrderPage
 import com.example.dropdone.pages.ProfilePage
-import com.example.dropdone.pages.SettingPage
-import com.example.dropdone.pages.getLaundryData
 import com.example.dropdone.ui.navigation.DETAIL_ARGUMENT_KEY
 import com.example.dropdone.ui.navigation.Menu
 
@@ -39,10 +39,8 @@ fun HomeApp(
                 composable(Menu.Order.route) {
                     OrderPage()
                 }
-                composable(Menu.Setting.route) {
-                    SettingPage()
-                }
-                composable(Menu.Detail.route,
+                composable(
+                    Menu.Detail.route,
                     arguments = listOf(
                         navArgument(DETAIL_ARGUMENT_KEY) {
                             type = NavType.StringType
@@ -52,8 +50,42 @@ fun HomeApp(
                     val laundryId = it.arguments?.getString(DETAIL_ARGUMENT_KEY)
                     if (laundryId != null) {
                         DetailPage(
-                            laundryId = laundryId
+                            laundryId = laundryId,
+                            navController = navController
                         )
+                    }
+                }
+                composable(
+                    Menu.Booking.route,
+                    arguments = listOf(
+                        navArgument(DETAIL_ARGUMENT_KEY) {
+                            type = NavType.StringType
+                        }
+                    )
+                ) {
+                    val laundryId = it.arguments?.getString(DETAIL_ARGUMENT_KEY)
+                    if (laundryId != null) {
+                        BookingPage(
+                            laundryId = laundryId,
+                            navController = navController
+                        )
+                    }
+                }
+                composable(
+                    Menu.DetailBooking.route,
+                    arguments = listOf(
+                        navArgument(DETAIL_ARGUMENT_KEY) {
+                            type = NavType.StringType
+                        }
+                    )
+                ) {
+                    val bookingId = it.arguments?.getString(DETAIL_ARGUMENT_KEY)
+                    if (bookingId != null) {
+                        DetailBookingPage(
+                            bookingId = bookingId,
+                            navController = navController
+                        )
+
                     }
                 }
             }

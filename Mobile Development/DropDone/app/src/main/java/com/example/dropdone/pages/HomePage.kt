@@ -1,6 +1,5 @@
 package com.example.dropdone.pages
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
@@ -9,10 +8,13 @@ import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.Settings
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalDrawerSheet
 import androidx.compose.material3.ModalNavigationDrawer
 import androidx.compose.material3.Text
@@ -21,12 +23,8 @@ import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.unit.dp
+import androidx.compose.ui.text.font.FontWeight
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.dropdone.R
@@ -63,10 +61,6 @@ fun HomePage(
                             id = 3,
                             title = stringResource(R.string.order_list),
                             icon = Icons.Default.Info
-                        ), SideMenuItem(
-                            id = 4,
-                            title = stringResource(R.string.setting),
-                            icon = Icons.Default.Settings
                         )
                     ),
                     onItemClick = { itemId ->
@@ -75,7 +69,6 @@ fun HomePage(
                                 1 -> navController.navigate(Menu.Home.route)
                                 2 -> navController.navigate(Menu.Profile.route)
                                 3 -> navController.navigate(Menu.Order.route)
-                                4 -> navController.navigate(Menu.Setting.route)
                             }
                             drawerState.close()
                         }
@@ -91,13 +84,7 @@ fun HomePage(
                 AppBar(onNavigationIconClick = {
                     scope.launch { drawerState.open() }
                 })
-                Box(modifier = Modifier) {
-                    Image(
-                        painter = painterResource(R.drawable.gray),
-                        contentDescription = null,
-                        contentScale = ContentScale.FillBounds,
-                        modifier = Modifier.height(190.dp)
-                    )
+                Box {
                     Column(
                         horizontalAlignment = Alignment.Start
                     ) {
@@ -122,7 +109,7 @@ fun AppBar(
                 Icon(
                     imageVector = Icons.Default.Menu,
                     contentDescription = null,
-                    tint = Color.Black
+                    tint = MaterialTheme.colorScheme.surfaceTint
                 )
             }
         }

@@ -15,19 +15,32 @@ data class Laundry(
 )
 
 data class Reviews(
-    val laundry_id: String? = null,
-    val review_author_id: String? = null,
-    val review_rating: Int? = null,
-    val review_text: String? = null,
-    val sentiment_score: Int? = null
+    val id: String = "",
+    val laundry_id: String = "",
+    val review_author_id: String = "",
+    val review_rating: Int = 0,
+    val review_text: String = "",
+    val sentiment_score: Double = 0.0
 )
 
 data class User(
-    val id: String? = null,
-    val address: String? = null,
-    val email: String? = null,
-    val password: String? = null,
+    val id: String = "",
+    val address: String = "",
+    val email: String = "",
+    val password: String = "",
     val pref_loc: Boolean = false,
     val pref_rating: Boolean = false,
-    val username: String? = null
+    val username: String = ""
+)
+
+data class Booking(
+    val id: String = "",
+    val laundry_id: String = "",
+    val review_author_id: String = "",
+    var delivery: Boolean = false,
+    val delivery_cost: Int = 0,
+    val note: String = "",
+    val pick: Boolean = false,
+    val type: String = "",
+    val weight: Double = 0.0
 )

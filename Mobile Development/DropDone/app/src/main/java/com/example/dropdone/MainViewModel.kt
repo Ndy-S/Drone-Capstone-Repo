@@ -5,7 +5,9 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.dropdone.data.LaundryRepository
+import com.example.dropdone.model.Booking
 import com.example.dropdone.model.Laundry
+import com.example.dropdone.model.Reviews
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -14,8 +16,7 @@ import kotlinx.coroutines.flow.StateFlow
 class MainViewModel (private val repository: LaundryRepository) : ViewModel() {
     private val _laundryList = MutableStateFlow(
         repository.getLaundry()
-            .sortedBy { it.id }
-            .sortedBy { it.address }
+            .sortedBy { it.laundry_name }
     )
     val laundryList: StateFlow<List<Laundry>> get() = _laundryList
 
@@ -25,15 +26,19 @@ class MainViewModel (private val repository: LaundryRepository) : ViewModel() {
     fun search(newQuery: String) {
         _query.value = newQuery
         _laundryList.value = repository.searchLaundry(_query.value)
-            .sortedBy { it.id }
-            .sortedBy { it.address }
+            .sortedBy { it.laundry_name }
     }
 
-    val db = Firebase.firestore
-    val data = mutableStateOf<List<Laundry>>(emptyList())
+    private val db = Firebase.firestore
 
     suspend fun getLaundryFromRepo(): MutableList<Laundry> {
         return repository.getLaundryFireStore(db)
+    }
+    suspend fun getReviewsFromRepo(): MutableList<Reviews> {
+        return repository.getReviewsFireStore(db)
+    }
+    suspend fun getBookingFromRepo(): MutableList<Booking> {
+        return repository.getBookingFireStore(db)
     }
 }
 

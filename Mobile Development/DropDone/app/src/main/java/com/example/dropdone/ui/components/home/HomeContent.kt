@@ -5,8 +5,9 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
@@ -18,8 +19,10 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.SearchBar
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -32,13 +35,18 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.example.dropdone.R
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.RectangleShape
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import coil.compose.AsyncImage
 import com.example.dropdone.data.LaundryRepository
-import com.example.dropdone.model.DataLaundryDummy
 import com.example.dropdone.MainViewModel
 import com.example.dropdone.ViewModelFactory
+import com.example.dropdone.model.Laundry
 import com.example.dropdone.ui.navigation.Menu
 
 @Composable
@@ -79,7 +87,6 @@ fun SearchBarLaundry(
     navController: NavController = rememberNavController(),
     mainViewModel: MainViewModel = viewModel(factory = ViewModelFactory(LaundryRepository()))
 ) {
-    val laundryList by mainViewModel.laundryList.collectAsState()
     val query by mainViewModel.query
     var isSearching by remember { mutableStateOf(false) }
 
@@ -101,18 +108,7 @@ fun SearchBarLaundry(
                 placeholder = { Text(stringResource(R.string.search)) },
                 leadingIcon = { Icon(Icons.Default.Search, contentDescription = null) }
             ) {
-//                LazyColumn(
-//                    modifier = Modifier.fillMaxWidth(),
-//                    verticalArrangement = Arrangement.spacedBy(4.dp)
-//                ) {
-//                    items(laundryList) { laundry ->
-//                        LaundrySearchList(
-//                            laundry = laundry,
-//                            modifier = Modifier.fillMaxWidth(),
-//                            navController = navController
-//                        )
-//                    }
-//                }
+                LaundrySearchList(modifier = Modifier, navController = navController)
             }
         }
         GMapView()
@@ -122,40 +118,83 @@ fun SearchBarLaundry(
 
 @Composable
 fun LaundrySearchList(
-    laundry: DataLaundryDummy,
     modifier: Modifier,
-    navController: NavController = rememberNavController()
+    navController: NavController = rememberNavController(),
+    mainViewModel: MainViewModel = viewModel(factory = ViewModelFactory(LaundryRepository()))
 ) {
-    Card(
-        border = BorderStroke(2.dp, Color.LightGray),
-        modifier = Modifier
-            .padding(start = 16.dp, end = 16.dp, top = 16.dp),
-        colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.primary
-        )
-    ) {
-        Row(
-            verticalAlignment = Alignment.CenterVertically,
-            modifier = Modifier
-                .fillMaxWidth()
-                .clickable {
-                    navController.navigate(Menu.Detail.laundryId(laundry.id))
+    val laundryColl = remember { mutableStateListOf<Laundry>() }
+
+    LaunchedEffect(Unit) {
+        val laundryData = mainViewModel.getLaundryFromRepo()
+        for (document in laundryData) {
+            laundryColl.add(document)
+        }
+    }
+    LazyColumn {
+        items(laundryColl.size) {
+            for (document in laundryColl) {
+                Card(
+                    border = BorderStroke(2.dp, Color.LightGray),
+                    modifier = Modifier
+                        .padding(start = 16.dp, end = 16.dp, top = 8.dp),
+                    colors = CardDefaults.cardColors(
+                        containerColor = MaterialTheme.colorScheme.primary
+                    )
+                ) {
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(4.dp)
+                            .clickable {
+                                navController.navigate(Menu.Detail.laundryId(document.id))
+                            }
+                    ) {
+                        AsyncImage(
+                            model = document.icon,
+                            contentDescription = null,
+                            contentScale = ContentScale.Crop,
+                            modifier = Modifier
+                                .padding(start = 8.dp, end = 8.dp)
+                                .size(50.dp)
+                                .clip(RectangleShape)
+                        )
+                        Column(
+                            modifier = Modifier
+                                .padding(end = 8.dp, top = 8.dp, bottom = 8.dp)
+                                .width(320.dp)
+                        ) {
+                            Row(
+                                verticalAlignment = Alignment.CenterVertically
+                            ) {
+                                Text(
+                                    text = document.laundry_name,
+                                    color = MaterialTheme.colorScheme.onSurface,
+                                    maxLines = 1,
+                                    overflow = TextOverflow.Ellipsis,
+                                    fontWeight = FontWeight.Bold,
+                                    modifier = Modifier.weight(1f)
+                                )
+                                Text(
+                                    text = ("Rate " + document.rating.toString()),
+                                    color = MaterialTheme.colorScheme.onSurface,
+                                    modifier = Modifier.offset(x = 67.dp)
+                                )
+                            }
+                            Text(
+                                text = document.address,
+                                color = MaterialTheme.colorScheme.onSurface,
+                                maxLines = 2,
+                                overflow = TextOverflow.Ellipsis,
+                                fontSize = 14.sp,
+                                lineHeight = 16.sp
+                            )
+                        }
+                    }
                 }
-                .padding(4.dp)
-        ) {
-            Column(
-                modifier = Modifier
-            ) {
-                Text(
-                    text = laundry.title,
-                    color = MaterialTheme.colorScheme.onSurface
-                )
-                Text(
-                    text = laundry.location,
-                    color = MaterialTheme.colorScheme.onSurface
-                )
             }
         }
     }
 }
+
 

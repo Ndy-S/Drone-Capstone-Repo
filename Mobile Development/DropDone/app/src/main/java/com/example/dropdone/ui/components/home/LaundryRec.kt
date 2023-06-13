@@ -1,13 +1,10 @@
 package com.example.dropdone.ui.components.home
 
-import android.text.style.LineHeightSpan
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -29,7 +26,6 @@ import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.LineHeightStyle
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -60,7 +56,7 @@ fun LaundryRec(
             modifier = Modifier
                 .padding(top = 8.dp, start = 16.dp, end = 16.dp)
         )
-        LaundryList(Modifier)
+        LaundryList(modifier = Modifier, navController = navController)
     }
 }
 
@@ -82,7 +78,7 @@ fun LaundryList(
         items(laundryColl.size) {
             for (document in laundryColl) {
                 Card(
-                    border = BorderStroke(2.dp, Color.LightGray),
+                    border = BorderStroke(2.dp, color = MaterialTheme.colorScheme.onSurface),
                     modifier = Modifier
                         .padding(start = 16.dp, end = 16.dp, top = 8.dp),
                     colors = CardDefaults.cardColors(

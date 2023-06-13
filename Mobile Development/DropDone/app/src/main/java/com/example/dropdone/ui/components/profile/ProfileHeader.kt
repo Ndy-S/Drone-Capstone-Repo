@@ -64,10 +64,10 @@ fun ProfileHeader(
 fun ProfileContent(
     modifier: Modifier = Modifier
 ) {
-    var userName by remember { mutableStateOf("") }
-    var userEmail by remember { mutableStateOf("") }
-    var userPassword by remember { mutableStateOf("") }
-    var userPasswordVisible by remember { mutableStateOf(false) }
+//    var userName by remember { mutableStateOf("") }
+//    var userEmail by remember { mutableStateOf("") }
+//    var userPassword by remember { mutableStateOf("") }
+//    var userPasswordVisible by remember { mutableStateOf(false) }
     var userAddress by remember { mutableStateOf("") }
 
     Column(
@@ -75,52 +75,52 @@ fun ProfileContent(
             .padding(8.dp),
         horizontalAlignment = Alignment.Start
     ) {
-        Text(stringResource(R.string.username))
-        OutlinedTextField(
-            value = userName,
-            onValueChange = { newUserName ->
-                userName = newUserName
-            },
-            label = { Text("Username")},
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(bottom = 20.dp)
-        )
-
-        Text(stringResource(R.string.email))
-        OutlinedTextField(
-            value = userEmail,
-            onValueChange = { newUserEmail ->
-                userEmail = newUserEmail
-            },
-            label = { Text("Email")},
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(bottom = 20.dp)
-        )
-
-        Text(stringResource(R.string.password))
-        OutlinedTextField(
-            value = userPassword,
-            onValueChange = { newUserPassword ->
-                userPassword = newUserPassword
-            },
-            label = { Text("Password")},
-            visualTransformation = if (userPasswordVisible) VisualTransformation.None else PasswordVisualTransformation(),
-            trailingIcon = {
-                IconButton(onClick = { userPasswordVisible = !userPasswordVisible }) {
-                    Icon(
-                        painter = painterResource(
-                            id = if (userPasswordVisible) R.drawable.ic_visibility_off else R.drawable.ic_visibility
-                        ),
-                        contentDescription = if (userPasswordVisible) "Hide Password" else "Show Password"
-                    )
-                }
-            },
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(bottom = 20.dp)
-        )
+//        Text(stringResource(R.string.username))
+//        OutlinedTextField(
+//            value = userName,
+//            onValueChange = { newUserName ->
+//                userName = newUserName
+//            },
+//            label = { Text("Username")},
+//            modifier = Modifier
+//                .fillMaxWidth()
+//                .padding(bottom = 20.dp)
+//        )
+//
+//        Text(stringResource(R.string.email))
+//        OutlinedTextField(
+//            value = userEmail,
+//            onValueChange = { newUserEmail ->
+//                userEmail = newUserEmail
+//            },
+//            label = { Text("Email")},
+//            modifier = Modifier
+//                .fillMaxWidth()
+//                .padding(bottom = 20.dp)
+//        )
+//
+//        Text(stringResource(R.string.password))
+//        OutlinedTextField(
+//            value = userPassword,
+//            onValueChange = { newUserPassword ->
+//                userPassword = newUserPassword
+//            },
+//            label = { Text("Password")},
+//            visualTransformation = if (userPasswordVisible) VisualTransformation.None else PasswordVisualTransformation(),
+//            trailingIcon = {
+//                IconButton(onClick = { userPasswordVisible = !userPasswordVisible }) {
+//                    Icon(
+//                        painter = painterResource(
+//                            id = if (userPasswordVisible) R.drawable.ic_visibility_off else R.drawable.ic_visibility
+//                        ),
+//                        contentDescription = if (userPasswordVisible) "Hide Password" else "Show Password"
+//                    )
+//                }
+//            },
+//            modifier = Modifier
+//                .fillMaxWidth()
+//                .padding(bottom = 20.dp)
+//        )
 
         Text(stringResource(R.string.current_loc))
         OutlinedTextField(

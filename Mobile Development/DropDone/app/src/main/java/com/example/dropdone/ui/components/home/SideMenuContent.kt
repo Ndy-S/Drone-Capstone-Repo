@@ -1,12 +1,15 @@
 package com.example.dropdone.ui.components.home
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material3.ColorScheme
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -22,14 +25,11 @@ import com.example.dropdone.model.SideMenuItem
 @Composable
 fun SideMenuHeader() {
     Box(
-
+        modifier = Modifier
+            .background(MaterialTheme.colorScheme.primary)
+            .height(150.dp)
+            .fillMaxWidth()
     ) {
-        Image(
-            painter = painterResource(R.drawable.gray),
-            contentDescription = null,
-            contentScale = ContentScale.FillBounds,
-            modifier = Modifier.height(150.dp)
-        )
         Column(
             modifier = Modifier
                 .padding(10.dp)
@@ -44,8 +44,14 @@ fun SideMenuHeader() {
                     .clip(CircleShape)
             )
             Spacer(modifier = Modifier.height(10.dp))
-            Text(text = stringResource(R.string.username))
-            Text(text = stringResource(R.string.emailDummy))
+            Text(
+                text = stringResource(R.string.username),
+                color = MaterialTheme.colorScheme.onSurface
+            )
+            Text(
+                text = stringResource(R.string.emailDummy),
+                color = MaterialTheme.colorScheme.onSurface
+            )
         }
     }
 }
@@ -57,7 +63,7 @@ fun SideMenuBody(
     onItemClick: (Int) -> Unit
 ) {
     LazyColumn(modifier) {
-        items(items) {item ->
+        items(items) { item ->
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -68,11 +74,13 @@ fun SideMenuBody(
             ) {
                 Icon(
                     imageVector = item.icon,
-                    contentDescription = null
+                    contentDescription = null,
+                    tint = MaterialTheme.colorScheme.surfaceTint
                 )
                 Spacer(modifier = Modifier.height(8.dp))
                 Text(
                     text = item.title,
+                    color = MaterialTheme.colorScheme.onSurface,
                     modifier = Modifier.padding(start = 8.dp)
                 )
             }

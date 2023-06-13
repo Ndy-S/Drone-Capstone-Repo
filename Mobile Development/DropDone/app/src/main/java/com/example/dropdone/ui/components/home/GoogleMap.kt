@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -35,7 +36,7 @@ fun GMapView(
             fontSize = 20.sp,
             fontWeight = FontWeight.Bold,
             modifier = Modifier
-                .padding(start = 16.dp, top =40.dp, bottom = 8.dp)
+                .padding(start = 16.dp, top =20.dp, bottom = 8.dp)
         )
         GMap()
     }
@@ -48,7 +49,7 @@ fun GMap() {
         position = CameraPosition.fromLatLngZoom(indonesia, 20f)
     }
     Card(
-        border = BorderStroke(2.dp, Color.LightGray),
+        border = BorderStroke(2.dp, color = MaterialTheme.colorScheme.onSurface),
         shape = RoundedCornerShape(20.dp),
         modifier = Modifier
             .padding(start = 16.dp, end = 16.dp)

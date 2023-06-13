@@ -15,4 +15,25 @@
     <string name="order_list">Order List</string>
     <string name="profile">Profile</string>
     <string name="home">Home</string>
+    <string name="opening_hours">Jam Buka</string>
+    <string name="reviewer_comment">Reviewer Comment</string>
+    <string name="price">Harga/Kg</string>
+    <string name="route">Lihat Rute</string>
+    <string name="booking">Booking</string>
+    <string name="clothes_type">Jenis Pakaian</string>
+    <string name="clothes_input_type">kategori umum (baju, celana, handuk)</string>
+    <string name="field_notEmpty">Field ini tidak boleh kosong</string>
+    <string name="clothes_weight">Berat Pakaian</string>
+    <string name="clothes_input_weight">Masukkan dalam kilogram(kg)</string>
+    <string name="clothes_category">Kategori Khusus</string>
+    <string name="clother_input_category">Kategori khusus (selimut, gorden, sprei, bed cover)</string>
+    <string name="clothes_total_category">Jumlah Kategori Khusus</string>
+    <string name="clothes_input_total_category">masukkan dalam angka</string>
+    <string name="warning">Tolong isi field dengan benar!</string>
+    <string name="confirm">Confirm</string>
+    <string name="method">Metode Pengiriman</string>
+    <string name="delivery">Antar Laundry</string>
+    <string name="pickup">Jemput Laundry</string>
+    <string name="note">Catatan Khusus</string>
+    <string name="detail_booking">Rincian Pemesanan</string>
 </resources>
