@@ -1,0 +1,68 @@
+{
+	"info": {
+		"_postman_id": "74f577f0-0e34-465c-94b5-846ce18be812",
+		"name": "Capstone API test",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "[GET] All Laundry Data",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5000/drone-capstone-386903/asia-southeast2/apps/api/laundry",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"drone-capstone-386903",
+						"asia-southeast2",
+						"apps",
+						"api",
+						"laundry"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "[GET] Laundry Data by Id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5000/drone-capstone-386903/asia-southeast2/apps/api/laundry/0KM8mgEdRPBi8zv7Mr6w",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"drone-capstone-386903",
+						"asia-southeast2",
+						"apps",
+						"api",
+						"laundry",
+						"0KM8mgEdRPBi8zv7Mr6w"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
