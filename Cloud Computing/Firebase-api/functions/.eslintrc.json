@@ -1,0 +1,22 @@
+{
+    "rules": {
+        "indent": [
+            "off",
+            "error",
+            "tab"
+        ],
+        "linebreak-style": [
+            "off",
+            "error",
+            "unix"
+        ],
+        "quotes": [
+            "error",
+            "single"
+        ],
+        "semi": [
+            "error",
+            "always"
+        ]
+    }
+}
