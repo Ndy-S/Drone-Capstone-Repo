@@ -13,25 +13,10 @@ admin.initializeApp({
 
 const db = admin.firestore();
 
-
+//test 
 app.get("/", (req, res) => {
     return res.status(200).json({ "message": "Welcome to Drone-Capstone" });
 });
-
-// add data to firestore
-// app.post("api/user", async(req, res) => {
-//     try {
-//         await db.collection("users")
-//             .doc("/" + req.body.id + "/")
-//             .create({ lat: req.body.latitude, lng: req.body.longitude });
-
-//         return req.status(204).json();
-//     } catch (error) {
-//         console.log(error);
-//         return res.status(500).send();
-//     }
-// });
-
 
 // get laundry by ID
 app.get("/api/laundry/:laundry_id", (req, res) => {
@@ -74,9 +59,6 @@ app.get("/api/laundry", async(req, res) => {
     }
 });
 
-app.listen(8080, () => {
-    console.log("Listening on port 8080");
-})
 exports.apps = functions
     .region("asia-southeast2")
     .https.onRequest(app);
