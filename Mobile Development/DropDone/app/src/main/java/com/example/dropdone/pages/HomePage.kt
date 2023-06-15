@@ -1,68 +1,50 @@
 package com.example.dropdone.pages
 
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Info
-import androidx.compose.material.icons.filled.Menu
-import androidx.compose.material.icons.filled.Settings
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.DrawerValue
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalDrawerSheet
 import androidx.compose.material3.ModalNavigationDrawer
-import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontWeight
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.dropdone.R
 import com.example.dropdone.model.SideMenuItem
+import com.example.dropdone.model.SideMenuObject
 import com.example.dropdone.model.UserData
-import com.example.dropdone.ui.components.home.*
+import com.example.dropdone.ui.components.AppBar
+import com.example.dropdone.ui.components.main.*
 import com.example.dropdone.ui.navigation.Menu
 import kotlinx.coroutines.launch
+import okhttp3.OkHttpClient
 
 @Composable
 fun HomePage(
+    client: OkHttpClient,
+    userData: UserData?,
+    onSignOut: () -> Unit,
     navController: NavController = rememberNavController()
 ) {
     val drawerState = rememberDrawerState(DrawerValue.Closed)
     val scope = rememberCoroutineScope()
+    val sideMenuContent = remember { SideMenuObject.sideMenuContent }
 
     ModalNavigationDrawer(
         drawerState = drawerState,
         drawerContent = {
             ModalDrawerSheet {
-                SideMenuHeader()
+                SideMenuHeader(userData)
                 SideMenuBody(
-                    items = listOf(
-                        SideMenuItem(
-                            id = 1,
-                            title = stringResource(R.string.home),
-                            icon = Icons.Default.Home
-                        ),
-                        SideMenuItem(
-                            id = 2,
-                            title = stringResource(R.string.profile),
-                            icon = Icons.Default.AccountCircle
-                        ), SideMenuItem(
-                            id = 3,
-                            title = stringResource(R.string.order_list),
-                            icon = Icons.Default.Info
-                        )
-                    ),
+                    onSignOut,
+                    items = sideMenuContent,
                     onItemClick = { itemId ->
                         scope.launch {
                             when (itemId) {
@@ -88,29 +70,10 @@ fun HomePage(
                     Column(
                         horizontalAlignment = Alignment.Start
                     ) {
-                        Profile()
-                        SearchBarLaundry(navController = navController)
+                        Profile(userData)
+                        SearchBarLaundry(client, userData, navController = navController)
                     }
                 }
-            }
-        }
-    )
-}
-
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun AppBar(
-    onNavigationIconClick: () -> Unit
-) {
-    TopAppBar(
-        title = { Text(text = "") },
-        navigationIcon = {
-            IconButton(onClick = onNavigationIconClick) {
-                Icon(
-                    imageVector = Icons.Default.Menu,
-                    contentDescription = null,
-                    tint = MaterialTheme.colorScheme.surfaceTint
-                )
             }
         }
     )

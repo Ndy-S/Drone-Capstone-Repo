@@ -1,5 +1,7 @@
 package com.example.dropdone.ui.navigation
 
+import okhttp3.OkHttpClient
+
 
 const val DETAIL_ARGUMENT_KEY = "id"
 sealed class Menu(val route: String) {

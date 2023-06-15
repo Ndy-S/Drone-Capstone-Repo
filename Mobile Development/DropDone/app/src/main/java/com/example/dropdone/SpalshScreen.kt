@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -19,24 +20,25 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import com.example.dropdone.ui.navigation.Menu
 import kotlinx.coroutines.delay
 
 @Composable
-fun SplashScreen(navController: NavController) {
+fun SplashScreen(navController: NavController, key1: Boolean) {
     Column(
         modifier = Modifier.fillMaxSize(),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Image(
-            painter = painterResource(R.drawable.ic_drone),
+            painter = painterResource(R.drawable.logo),
             contentDescription = "Splash Image"
         )
         Text(
             text = "Drop & Done",
             fontSize = 24.sp,
             fontWeight = FontWeight.Bold,
-            color = Color(0xFF6A1B9A),
+            color = MaterialTheme.colorScheme.primary,
             modifier = Modifier.padding(top = 15.dp)
         )
         Spacer(modifier = Modifier.height(8.dp))
@@ -45,6 +47,10 @@ fun SplashScreen(navController: NavController) {
 
     LaunchedEffect(Unit) {
         delay(2000) // 2 seconds delay
-        navController.navigate("sign_in")
+        if (key1) {
+            navController.navigate(Menu.Home.route)
+        } else {
+            navController.navigate("sign_in")
+        }
     }
 }

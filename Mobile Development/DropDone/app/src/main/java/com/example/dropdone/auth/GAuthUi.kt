@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -54,7 +55,7 @@ fun GAuthUi(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Image(
-                painter = painterResource(R.drawable.ic_drone),
+                painter = painterResource(R.drawable.logo),
                 contentDescription = "Drone Image",
                 modifier = Modifier.size(200.dp)
             )
@@ -80,7 +81,7 @@ fun GAuthUi(
                 elevation = ButtonDefaults.buttonElevation(8.dp),
                 contentPadding = PaddingValues(12.dp),
                 shape = RoundedCornerShape(8.dp),
-                colors = ButtonDefaults.buttonColors(Color.Blue)
+                colors = ButtonDefaults.buttonColors(MaterialTheme.colorScheme.primary)
             ) {
                 Image(
                     painter = painterResource(R.drawable.ic_google_logo),
@@ -90,7 +91,7 @@ fun GAuthUi(
                 Spacer(modifier = Modifier.width(8.dp))
                 Text(
                     text = "Sign in with Google",
-                    color = Color.White
+                    color = MaterialTheme.colorScheme.onSurface,
                 )
             }
         }

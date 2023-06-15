@@ -1,6 +1,7 @@
 package com.example.dropdone
 
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.rememberLauncherForActivityResult
@@ -12,6 +13,7 @@ import androidx.compose.runtime.getValue
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -19,13 +21,18 @@ import com.example.dropdone.auth.AuthViewModel
 import com.example.dropdone.auth.GAuth
 import com.example.dropdone.auth.GAuthUi
 import com.example.dropdone.model.UserData
-import com.example.dropdone.pages.HomePage
-import com.example.dropdone.ui.navigation.Menu
 import com.example.dropdone.ui.theme.DropDoneTheme
 import com.google.android.gms.auth.api.identity.Identity
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.SetOptions
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import okhttp3.FormBody
+import okhttp3.OkHttpClient
+import okhttp3.Request
+import org.json.JSONObject
+import java.io.IOException
 
 class MainActivity : ComponentActivity() {
 
@@ -36,14 +43,20 @@ class MainActivity : ComponentActivity() {
         )
     }
 
+    val client = OkHttpClient()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
             DropDoneTheme {
-                val navController = rememberNavController()
+                val navController: NavHostController = rememberNavController()
                 NavHost(navController = navController, startDestination = "splash") {
                     composable("splash") {
-                        SplashScreen(navController = navController)
+                        val viewModel = viewModel<AuthViewModel>()
+                        val state by viewModel.state.collectAsStateWithLifecycle()
+
+                        SplashScreen(navController = navController, key1 = state.isSignInSuccessful)
+                        viewModel.resetState()
                     }
                     composable("sign_in") {
                         val viewModel = viewModel<AuthViewModel>()
@@ -97,6 +110,7 @@ class MainActivity : ComponentActivity() {
                     }
                     composable("validation") {
                         Validation(
+                            client,
                             userData = gAuth.getSignedInUser(),
                             onSignOut = {
                                 lifecycleScope.launch {

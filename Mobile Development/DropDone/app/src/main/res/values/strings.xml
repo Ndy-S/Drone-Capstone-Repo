@@ -12,9 +12,6 @@
     <string name="recommendation_rate">Rating Tertinggi</string>
     <string name="recommendation">Rekomendasi Laundry</string>
     <string name="current_loc">Lokasi Kamu Saat Ini</string>
-    <string name="order_list">Order List</string>
-    <string name="profile">Profile</string>
-    <string name="home">Home</string>
     <string name="opening_hours">Jam Buka</string>
     <string name="reviewer_comment">Reviewer Comment</string>
     <string name="price">Harga/Kg</string>
@@ -36,4 +33,13 @@
     <string name="pickup">Jemput Laundry</string>
     <string name="note">Catatan Khusus</string>
     <string name="detail_booking">Rincian Pemesanan</string>
+    <string name="sign_out">Sign Out</string>
+    <string name="self_deliver">Antar Sendiri</string>
+    <string name="using_courier">Pakai Kurir</string>
+    <string name="laundry_price">Harga Laundry</string>
+    <string name="delivery_price">Harga Ongkir</string>
+    <string name="total_price">Total Harga</string>
+    <string name="rate_comment">Beri Penilaian dan Ulasan</string>
+    <string name="rate">1-5</string>
+    <string name="description">Deskripsi</string>
 </resources>
