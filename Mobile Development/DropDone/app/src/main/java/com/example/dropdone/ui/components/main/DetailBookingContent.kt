@@ -1,6 +1,8 @@
 package com.example.dropdone.ui.components.main
 
 import android.util.Log
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -9,17 +11,19 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Divider
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.produceState
 import androidx.compose.runtime.remember
@@ -27,9 +31,9 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -61,19 +65,23 @@ fun DetailBookingContent(
     bookingId: String,
     client: OkHttpClient,
     userData: UserData?,
-    navController: NavController = rememberNavController()
+    navController: NavController = rememberNavController(),
+    mainViewModel: MainViewModel = viewModel(factory = ViewModelFactory(LaundryRepository()))
 ) {
     val collection = Firebase.firestore.collection("reviews")
     val document = collection.document()
 
     val dataBooking = getDataBooking(bookingId)
-    var rate by remember { mutableStateOf("") }
+    var rate by remember { mutableStateOf(3) }
     var comment by remember { mutableStateOf("") }
-    val isErrorRate = rate.isEmpty()
     val isErrorComment = comment.isEmpty()
     val showWarning = remember { mutableStateOf(false) }
 
     val predictionState = remember { mutableStateOf(0.0) }
+
+    val collectionBooking = Firebase.firestore.collection("booking")
+    val documentBooking = collectionBooking.document()
+
 
     if (dataBooking.isEmpty()) {
         Text(text = "")
@@ -260,25 +268,22 @@ fun DetailBookingContent(
                     text = stringResource(R.string.rate_comment),
                     color = MaterialTheme.colorScheme.onSurface,
                 )
-                OutlinedTextField(
-                    value = rate,
-                    placeholder = { Text(stringResource(R.string.rate)) },
-                    singleLine = true,
-                    onValueChange = { newRate ->
-                        rate = newRate
-                    },
-                    keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Number),
-                    isError = isErrorRate,
-                    supportingText = {
-                        if (isErrorRate) {
-                            Text(
-                                text = stringResource(R.string.field_notEmpty),
-                                color = MaterialTheme.colorScheme.onSurface
-                            )
-                        }
-                    },
-                    modifier = Modifier.fillMaxWidth()
-                )
+                Row(
+                    horizontalArrangement = Arrangement.Center
+                ) {
+                    for (i in 1..5) {
+                        Icon(
+                            painter = painterResource(R.drawable.ic_star),
+                            contentDescription = null,
+                            modifier = Modifier
+                                .size(50.dp)
+                                .clickable {
+                                    rate = i
+                                },
+                            tint = if (i <= rate) Color.Yellow else Color.Gray
+                        )
+                    }
+                }
                 Spacer(modifier = Modifier.height(8.dp))
                 Text(
                     text = stringResource(R.string.description),
@@ -329,11 +334,7 @@ fun DetailBookingContent(
                 Spacer(modifier = Modifier.height(8.dp))
                 Button(
                     onClick = {
-                        if (isErrorRate && isErrorComment) {
-                            showWarning.value = true
-                        } else if (isErrorRate) {
-                            showWarning.value = true
-                        } else if (isErrorComment) {
+                        if (isErrorComment) {
                             showWarning.value = true
                         } else {
                             predictSentiment(comment, client) { prediction ->

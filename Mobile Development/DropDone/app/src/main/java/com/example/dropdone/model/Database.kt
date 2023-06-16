@@ -41,14 +41,11 @@ class SignInResult(
 )
 
 data class UserData(
-    val userId: String,
-    val username: String?,
-    val password: String?,
-    val email: String?,
+    val userId: String?,
     val address: String?,
-    val pref_loc: Boolean,
-    val pref_rating: Boolean,
-    val profilePictureUrl: String?
+    val email: String?,
+    val profilePictureUrl: String?,
+    val username: String?
 )
 
 data class SignInState(

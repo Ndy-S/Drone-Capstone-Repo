@@ -1,12 +1,14 @@
 package com.example.dropdone.ui.components.main
 
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -26,6 +28,7 @@ import androidx.compose.runtime.produceState
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -41,6 +44,7 @@ import com.example.dropdone.data.LaundryRepository
 import com.example.dropdone.model.Laundry
 import com.example.dropdone.model.Reviews
 import com.example.dropdone.ui.navigation.Menu
+import okhttp3.OkHttpClient
 
 @Composable
 fun DetailContent(
@@ -85,8 +89,15 @@ fun DetailContent(
                     fontSize = 20.sp,
                     modifier = Modifier.weight(1f)
                 )
+                Image(
+                    painter = painterResource(R.drawable.star),
+                    contentDescription = null,
+                    modifier = Modifier
+                        .size(20.dp)
+                        .padding(end = 4.dp)
+                )
                 Text(
-                    text = ("Rate " + laundry.rating.toString()),
+                    text = laundry.rating.toString(),
                     color = MaterialTheme.colorScheme.onSurface
                 )
             }
@@ -165,11 +176,22 @@ fun DetailContent(
                                         .fillMaxWidth()
                                         .padding(8.dp)
                                 ) {
-                                    Text(
-                                        text = ("Rate " + document.review_rating.toString()),
-                                        color = MaterialTheme.colorScheme.onSurface,
-                                        fontWeight = FontWeight.Bold
-                                    )
+                                    Row(
+                                        verticalAlignment = Alignment.CenterVertically,
+                                    ) {
+                                        Image(
+                                            painter = painterResource(R.drawable.star),
+                                            contentDescription = null,
+                                            modifier = Modifier
+                                                .size(20.dp)
+                                                .padding(end = 4.dp)
+                                        )
+                                        Text(
+                                            text = document.review_rating.toString(),
+                                            color = MaterialTheme.colorScheme.onSurface,
+                                            fontWeight = FontWeight.Bold
+                                        )
+                                    }
                                     Spacer(modifier = Modifier.height(4.dp))
                                     Text(
                                         text = document.review_text,
@@ -192,7 +214,7 @@ fun DetailContent(
             ) {
                 Button(
                     onClick = {
-
+                              navController.navigate(Menu.MapRoute.laundryId(laundryId))
                     },
                     colors = ButtonDefaults.buttonColors(MaterialTheme.colorScheme.onSurface),
                     modifier = Modifier.width(220.dp)

@@ -4,6 +4,7 @@ import android.util.Log
 import com.example.dropdone.model.Booking
 import com.example.dropdone.model.Laundry
 import com.example.dropdone.model.Reviews
+import com.example.dropdone.model.UserData
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
@@ -53,22 +54,20 @@ class LaundryRepository {
             .addOnSuccessListener { result ->
                 for (document in result) {
                     val data = document.data
-                    if (data != null) {
-                        val documentData = Laundry(
-                            id = document.id,
-                            address = data["address"].toString(),
-                            email = data["email"].toString(),
-                            icon = data["icon"].toString(),
-                            latitude = data["latitude"].toString(),
-                            laundry_name = data["laundry_name"].toString(),
-                            longitude = data["longitude"].toString(),
-                            opening_hours = data["opening_hours"].toString(),
-                            phone_number = data["phone_number"].toString(),
-                            price = data["price"].toString(),
-                            rating = data["rating"].toString().toDoubleOrNull() ?: 0.0
-                        )
-                        laundryData.add(documentData)
-                    }
+                    val documentData = Laundry(
+                        id = document.id,
+                        address = data["address"].toString(),
+                        email = data["email"].toString(),
+                        icon = data["icon"].toString(),
+                        latitude = data["latitude"].toString(),
+                        laundry_name = data["laundry_name"].toString(),
+                        longitude = data["longitude"].toString(),
+                        opening_hours = data["opening_hours"].toString(),
+                        phone_number = data["phone_number"].toString(),
+                        price = data["price"].toString(),
+                        rating = data["rating"].toString().toDoubleOrNull() ?: 0.0
+                    )
+                    laundryData.add(documentData)
                 }
             }
             .addOnFailureListener { exception ->
@@ -143,6 +142,7 @@ class LaundryRepository {
         Log.d("review", "getReviewFireStore: $reviewsData")
         return reviewsData
     }
+
     suspend fun getBookingFireStore(db: FirebaseFirestore): MutableList<Booking> {
         val bookingData = mutableListOf<Booking>()
         val collection = db.collection("booking")
@@ -172,5 +172,32 @@ class LaundryRepository {
         }
         Log.d("reviews", "getBookingFireStore: $bookingData")
         return bookingData
+    }
+
+    suspend fun getUserFireStore(db: FirebaseFirestore): MutableList<UserData> {
+        val userData = mutableListOf<UserData>()
+        val collection = db.collection("users")
+
+        try {
+            val snapshot = collection.get().await()
+
+            for (document in snapshot.documents) {
+                val data = document.data
+                if (data != null) {
+                    val documentData = UserData(
+                        userId = document.id,
+                        address = data["address"].toString(),
+                        email = data["email"].toString(),
+                        profilePictureUrl = data["profilePictureUrl"].toString(),
+                        username = data["username"].toString()
+                    )
+                    userData.add(documentData)
+                }
+            }
+        } catch (e: Exception) {
+            Log.e("Firestore Error", "Error getting laundry documents: ", e)
+        }
+        Log.d("reviews", "getBookingFireStore: $userData")
+        return userData
     }
 }

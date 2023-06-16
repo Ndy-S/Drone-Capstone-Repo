@@ -18,6 +18,7 @@ import com.example.dropdone.pages.DetailPage
 import com.example.dropdone.pages.HomePage
 import com.example.dropdone.pages.OrderPage
 import com.example.dropdone.pages.ProfilePage
+import com.example.dropdone.ui.components.main.MapRoute
 import com.example.dropdone.ui.navigation.DETAIL_ARGUMENT_KEY
 import com.example.dropdone.ui.navigation.Menu
 import okhttp3.OkHttpClient
@@ -36,13 +37,13 @@ fun HomeApp(
                 startDestination = Menu.Home.route
             ) {
                 composable(Menu.Home.route) {
-                    HomePage(client, userData, onSignOut, navController = navController)
+                    HomePage(client, userData, onSignOut, navController)
                 }
                 composable(Menu.Profile.route) {
-                    ProfilePage(userData, onSignOut, navController = navController)
+                    ProfilePage(userData, onSignOut, navController)
                 }
                 composable(Menu.Order.route) {
-                    OrderPage(userData, onSignOut, navController = navController)
+                    OrderPage(userData, onSignOut, navController)
                 }
                 composable(
                     Menu.Detail.route,
@@ -96,6 +97,23 @@ fun HomeApp(
                             userData = userData,
                             onSignOut = onSignOut,
                             navController = navController
+                        )
+                    }
+                }
+                composable(
+                    Menu.MapRoute.route,
+                    arguments = listOf(
+                        navArgument(DETAIL_ARGUMENT_KEY) {
+                            type = NavType.StringType
+                        },
+                    )
+                ) {
+                    val laundryId = it.arguments?.getString(DETAIL_ARGUMENT_KEY)
+                    if (laundryId != null) {
+                        MapRoute(
+                            laundryId = laundryId,
+                            userData = userData,
+                            client = client,
                         )
                     }
                 }

@@ -1,13 +1,13 @@
 package com.example.dropdone.ui.components.side
 
+import android.util.Log
+import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
@@ -17,7 +17,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -25,16 +24,20 @@ import androidx.compose.ui.unit.sp
 import com.example.dropdone.R
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.text.input.PasswordVisualTransformation
-import androidx.compose.ui.text.input.VisualTransformation
+import androidx.compose.ui.platform.LocalContext
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import coil.compose.rememberAsyncImagePainter
 import com.example.dropdone.model.UserData
+import com.example.dropdone.ui.navigation.Menu
+import com.google.firebase.firestore.FirebaseFirestore
 
 
 @Composable
 fun ProfileHeader(
     userData: UserData?,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    navController: NavController = rememberNavController()
 ) {
     Column(
         modifier = Modifier
@@ -66,13 +69,16 @@ fun ProfileHeader(
 @Composable
 fun ProfileContent(
     userData: UserData?,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    navController: NavController = rememberNavController()
 ) {
+    val context = LocalContext.current
     var userName by remember { mutableStateOf(userData?.username) }
     var userEmail by remember { mutableStateOf(userData?.email) }
-    var userPassword by remember { mutableStateOf(userData?.password) }
-    var userPasswordVisible by remember { mutableStateOf(false) }
     var userAddress by remember { mutableStateOf("") }
+    val db = FirebaseFirestore.getInstance()
+    val collection = db.collection("users")
+    val query = collection.whereEqualTo("email", userData?.email)
 
     Column(
         modifier = Modifier
@@ -103,36 +109,13 @@ fun ProfileContent(
                 .padding(bottom = 20.dp)
         )
 
-        Text(stringResource(R.string.password))
-        OutlinedTextField(
-            value = userPassword.toString(),
-            enabled = false,
-            onValueChange = { newUserPassword ->
-                userPassword = newUserPassword
-            },
-            visualTransformation = if (userPasswordVisible) VisualTransformation.None else PasswordVisualTransformation(),
-            trailingIcon = {
-                IconButton(onClick = { userPasswordVisible = !userPasswordVisible }) {
-                    Icon(
-                        painter = painterResource(
-                            id = if (userPasswordVisible) R.drawable.ic_visibility_off else R.drawable.ic_visibility
-                        ),
-                        contentDescription = if (userPasswordVisible) "Hide Password" else "Show Password"
-                    )
-                }
-            },
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(bottom = 20.dp)
-        )
-
         Text(stringResource(R.string.current_loc))
         OutlinedTextField(
             value = userAddress,
             onValueChange = { newUserAddress ->
                 userAddress = newUserAddress
             },
-            label = { Text("Lokasi kamu saat ini")},
+            label = { Text("Jl. Nama jalan, kelurahan, kota, provinsi") },
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(bottom = 30.dp)
@@ -140,7 +123,29 @@ fun ProfileContent(
 
         Button(
             onClick = {
+                query.get()
+                    .addOnSuccessListener { querySnapshot ->
+                        val firstDocument = querySnapshot.documents.firstOrNull()
+                        if (firstDocument != null) {
+                            val document = firstDocument.reference
 
+                            val userLocation = hashMapOf(
+                                "address" to userAddress
+                            )
+
+                            document.update(userLocation as Map<String, Any>)
+                                .addOnSuccessListener {
+                                    Toast.makeText(context, "Update successful!", Toast.LENGTH_SHORT).show()
+                                    navController.navigate(Menu.Home.route)
+                                }
+                                .addOnFailureListener { e ->
+                                    Log.d("set", "BookingPage: ", e)
+                                }
+                        }
+                    }
+                    .addOnFailureListener { e ->
+                        Log.d("profileHeader", e.toString())
+                    }
             },
             shape = RoundedCornerShape(6.dp),
             colors = ButtonDefaults.buttonColors(MaterialTheme.colorScheme.primary),

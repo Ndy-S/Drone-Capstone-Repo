@@ -42,4 +42,5 @@
     <string name="rate_comment">Beri Penilaian dan Ulasan</string>
     <string name="rate">1-5</string>
     <string name="description">Deskripsi</string>
+    <string name="recommendation_error">Tidak Ada Rekomendasi Saat Ini, Silahkan Klik Search Bar Untuk Mencari Laundry dan Melakukan Booking Serta Memberikan Review Untuk Mendapatkan Rekomendasi</string>
 </resources>

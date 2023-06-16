@@ -72,14 +72,7 @@ fun OrderPage(
                 AppBar(onNavigationIconClick = {
                     scope.launch { drawerState.open() }
                 })
-                Box(
-                    modifier = Modifier
-                        .background(MaterialTheme.colorScheme.primary)
-                        .height(200.dp)
-                        .fillMaxWidth()
-                ) {
-                    OrderContent()
-                }
+                OrderContent(userData)
             }
         }
     )

@@ -46,11 +46,8 @@ class GAuth(
                     UserData(
                         userId= uid,
                         username = displayName,
-                        password = "N/A",
                         email = email,
                         address = "N/A",
-                        pref_loc = false,
-                        pref_rating = false,
                         profilePictureUrl = photoUrl?.toString()
                     )
                 },
@@ -80,11 +77,8 @@ class GAuth(
         UserData(
             userId= uid,
             username = displayName,
-            password = "N/A",
             email = email,
             address = "N/A",
-            pref_loc = false,
-            pref_rating = false,
             profilePictureUrl = photoUrl?.toString()
         )
     }

@@ -8,6 +8,7 @@ import com.example.dropdone.data.LaundryRepository
 import com.example.dropdone.model.Booking
 import com.example.dropdone.model.Laundry
 import com.example.dropdone.model.Reviews
+import com.example.dropdone.model.UserData
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -39,6 +40,9 @@ class MainViewModel (private val repository: LaundryRepository) : ViewModel() {
     }
     suspend fun getBookingFromRepo(): MutableList<Booking> {
         return repository.getBookingFireStore(db)
+    }
+    suspend fun getUserFromRepo(): MutableList<UserData> {
+        return repository.getUserFireStore(db)
     }
 }
 

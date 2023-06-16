@@ -79,9 +79,9 @@ fun ProfilePage(
                         .height(200.dp)
                         .fillMaxWidth()
                 ) {
-                    ProfileHeader(userData)
+                    ProfileHeader(userData, navController = navController)
                 }
-                ProfileContent(userData)
+                ProfileContent(userData, navController = navController)
             }
         }
     )

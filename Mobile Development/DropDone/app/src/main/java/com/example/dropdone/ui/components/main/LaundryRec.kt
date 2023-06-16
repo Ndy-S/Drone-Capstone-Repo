@@ -2,6 +2,7 @@ package com.example.dropdone.ui.components.main
 
 import android.util.Log
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -24,6 +25,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
@@ -75,15 +77,12 @@ fun LaundryRec(
             recommendationState.addAll(recommendation)
 
             getLaundryData(recommendation) { laundry ->
-                Log.d("HasilItems",laundry.toString())
+                Log.d("HasilItems", laundry.toString())
                 laundryState.clear()
                 laundryState.addAll(laundry)
             }
         }
 
-
-
-        Log.d("HasilItems", "LaundryRec: $laundryState")
         LazyColumn {
             items(laundryState) { laundry ->
                 Card(
@@ -128,8 +127,15 @@ fun LaundryRec(
                                     fontWeight = FontWeight.Bold,
                                     modifier = Modifier.weight(1f)
                                 )
+                                Image(
+                                    painter = painterResource(R.drawable.star),
+                                    contentDescription = null,
+                                    modifier = Modifier
+                                        .size(20.dp)
+                                        .offset(x = 60.dp)
+                                )
                                 Text(
-                                    text = ("Rate " + laundry.rating.toString()),
+                                    text = laundry.rating.toString(),
                                     color = MaterialTheme.colorScheme.onSurface,
                                     modifier = Modifier.offset(x = 67.dp)
                                 )

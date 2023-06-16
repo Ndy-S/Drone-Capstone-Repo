@@ -33,6 +33,7 @@ import com.example.dropdone.R
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -182,8 +183,15 @@ fun LaundrySearchList(
                                     fontWeight = FontWeight.Bold,
                                     modifier = Modifier.weight(1f)
                                 )
+                                Image(
+                                    painter = painterResource(R.drawable.star),
+                                    contentDescription = null,
+                                    modifier = Modifier
+                                        .size(20.dp)
+                                        .offset(x = 60.dp)
+                                )
                                 Text(
-                                    text = ("Rate " + document.rating.toString()),
+                                    text = document.rating.toString(),
                                     color = MaterialTheme.colorScheme.onSurface,
                                     modifier = Modifier.offset(x = 67.dp)
                                 )

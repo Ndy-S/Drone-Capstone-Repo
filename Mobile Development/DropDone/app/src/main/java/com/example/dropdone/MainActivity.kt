@@ -143,24 +143,18 @@ class MainActivity : ComponentActivity() {
                     val user = UserData(
                         userId = userData.userId,
                         username = userData.username ?: "N/A",
-                        password = "N/A",
                         email = userData.email ?: "N/A",
                         address = "N/A",
-                        pref_loc = false,
-                        pref_rating = false,
                         profilePictureUrl = userData.profilePictureUrl
                     )
-                    usersCollection.document(userData.userId)
+                    usersCollection.document(userData.userId.toString())
                         .set(
                             user,
                             SetOptions.mergeFields(
                                 listOf(
                                     "username",
-                                    "password",
                                     "email",
                                     "address",
-                                    "pref_loc",
-                                    "pref_rating",
                                     "profilePictureUrl"
                                 )
                             )
